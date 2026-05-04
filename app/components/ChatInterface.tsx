@@ -3,6 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { useState, useEffect, useRef } from "react";
 import { Send, User, Bot, Loader2 } from "lucide-react";
+import { DefaultChatTransport } from "ai";  // ← import this
 
 export default function ChatInterface({ fileId }: { fileId: string }) {
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -10,9 +11,17 @@ export default function ChatInterface({ fileId }: { fileId: string }) {
     // 1. Manually manage input state as per new docs
     const [input, setInput] = useState('');
     // 2. Destructure using the new sendMessage pattern
+
     const { messages, sendMessage, error } = useChat({
-        api: "/api/chat",
-        body: { fileId },
+        transport: new DefaultChatTransport({
+            api: "/api/chat",
+            prepareSendMessagesRequest: ({ messages }) => ({
+                body: {
+                    messages,
+                    fileId,  // pass fileId here
+                },
+            }),
+        }),
     });
     // Determine loading state based on the last message
     const isLoading = messages.length > 0 && messages[messages.length - 1].role === 'user';
