@@ -6,10 +6,10 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/Prisma";
 
 const s3 = new S3Client({
-  region: process.env.AWS_REGION!,
+  region: process.env.REGION!,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.ACCESS_KEY_ID!,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY!,
   },
 });
 
@@ -20,7 +20,7 @@ export async function getPresignedPostUrl(fileName: string, contentType: string)
   const fileKey = `uploads/${session.user.id}/${Date.now()}-${fileName}`;
 
   const command = new PutObjectCommand({
-    Bucket: process.env.AWS_S3_BUCKET_NAME!,
+    Bucket: process.env.S3_BUCKET_NAME!,
     Key: fileKey,
     ContentType: contentType,
   });
@@ -32,7 +32,7 @@ export async function getPresignedPostUrl(fileName: string, contentType: string)
       name: fileName,
       type: contentType,
       uploadStatus: "PENDING",
-      url: `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileKey}`
+      url: `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.REGION}.amazonaws.com/${fileKey}`
     }
   });
 

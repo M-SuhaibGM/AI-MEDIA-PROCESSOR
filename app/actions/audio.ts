@@ -9,8 +9,8 @@ import Groq from "groq-sdk"; // Import Groq for transcription
 const s3Client = new S3Client({
   region: process.env.AWS_REGION!,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.ACCESS_KEY_ID!,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY!,
   },
 });
 
@@ -26,7 +26,7 @@ export async function processFileContent(fileId: string, s3Key: string) {
 
     // 2. Get file from S3
     const command = new GetObjectCommand({
-      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Bucket: process.env.S3_BUCKET_NAME,
       Key: s3Key,
     });
     const response = await s3Client.send(command);

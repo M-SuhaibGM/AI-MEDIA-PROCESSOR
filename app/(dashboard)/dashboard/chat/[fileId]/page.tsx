@@ -8,10 +8,10 @@ import NotFound from "../../not-found";
 
 // 1. Initialize the S3 Client
 const s3Client = new S3Client({
-    region: process.env.AWS_REGION,
+    region: process.env.REGION!,
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+        accessKeyId: process.env.ACCESS_KEY_ID!,
+        secretAccessKey: process.env.SECRET_ACCESS_KEY!,
     },
 });
 
@@ -41,7 +41,7 @@ export default async function ChatPage({ params }: PageProps) {
     const fileKey = file?.url.split('amazonaws.com/')[1];
 
     const command = new GetObjectCommand({
-        Bucket: "suhaib-ai-input-raw",
+        Bucket: process.env.S3_BUCKET_NAME!,
         Key: fileKey,
     });
 
