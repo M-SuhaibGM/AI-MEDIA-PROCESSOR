@@ -1,23 +1,28 @@
 import { auth } from "@/lib/auth"
+import { NextResponse } from "next/server"
 
-// Next.js 16 explicitly looks for a function named 'proxy' or 'default'
 export default auth((req) => {
+  const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  const isAuthPage = req.nextUrl.pathname.startsWith("/auth");
 
+  const isAuthPage = nextUrl.pathname.startsWith("/auth");
+  const isPublicRoute = nextUrl.pathname === "/"; // Add other public routes here
+
+  // 1. If on Auth page and logged in, go to home
   if (isAuthPage) {
     if (isLoggedIn) {
-      return Response.redirect(new URL("/", req.nextUrl));
+      return NextResponse.redirect(new URL("/", nextUrl));
     }
-    return null;
+    return NextResponse.next();
   }
 
-  if (!isLoggedIn) {
-    return Response.redirect(new URL("/auth", req.nextUrl));
+  // 2. If not logged in and not on a public/auth page, go to auth
+  if (!isLoggedIn && !isAuthPage) {
+    return NextResponse.redirect(new URL("/auth", nextUrl));
   }
+
+  return NextResponse.next();
 });
-// proxy.ts or middleware.ts
-
 export const config = {
   matcher: [
     /*
