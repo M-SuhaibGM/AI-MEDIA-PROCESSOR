@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
+import type { File } from "@prisma/client";
+
 
 export default async function DashboardPage() {
     const session = await auth();
@@ -63,7 +65,7 @@ export default async function DashboardPage() {
                         </CardHeader>
                         <CardContent>
                             <div className="text-3xl font-bold">
-                                {files.filter((f) => f.uploadStatus === "COMPLETED").length} <span className="text-sm font-normal text-slate-500 italic">Analyzed</span>
+                                {files.filter((f: File) => f.uploadStatus === "COMPLETED").length} <span className="text-sm font-normal text-slate-500 italic">Analyzed</span>
                             </div>
                         </CardContent>
                     </Card>
