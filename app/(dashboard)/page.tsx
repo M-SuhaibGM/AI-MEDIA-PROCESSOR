@@ -53,7 +53,7 @@ export default async function DashboardPage() {
                             <FileText className="h-4 w-4 text-cyan-400" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-bold">{files.length} Files</div>
+                            <div className="text-3xl text-white font-bold">{files.length} Files</div>
                         </CardContent>
                     </Card>
 
@@ -63,7 +63,7 @@ export default async function DashboardPage() {
                             <Zap className="h-4 w-4 text-yellow-400 fill-yellow-400/20" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-bold">
+                            <div className="text-3xl text-white font-bold">
                                 {files.filter((f: any) => f.uploadStatus === "COMPLETED").length} <span className="text-sm font-normal text-slate-500 italic">Analyzed</span>
                             </div>
                         </CardContent>
@@ -75,7 +75,7 @@ export default async function DashboardPage() {
                             <Database className="h-4 w-4 text-blue-400" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-bold">AWS RDS</div>
+                            <div className="text-3xl text-white font-bold">AWS RDS</div>
                             <p className="text-[10px] text-cyan-500/70 font-mono mt-1 uppercase tracking-widest">Active Connection</p>
                         </CardContent>
                     </Card>
