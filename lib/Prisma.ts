@@ -7,7 +7,7 @@ const globalForPrisma = globalThis as unknown as {
 const adapter = new PrismaMariaDb({
   host: process.env.HOST_NAME,
   port: 13815,
-  user: process.env.USERNAME,
+  user: "avnadmin",
   password: process.env.DATABASE_PASSWORD,
   database: "defaultdb",
   connectionLimit: 10,
