@@ -1,18 +1,19 @@
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import  {PrismaClient}  from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
 const adapter = new PrismaMariaDb({
   host: process.env.HOST_NAME,
-  port: Number(process.env.DB_PORT) || 13815,
-  user: "avnadmin",
+  port: 13815,
+  user: process.env.USERNAME,
   password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
-  connectionLimit: 5,
+  database: "defaultdb",
+  connectionLimit: 10,
   connectTimeout: 30000,
 });
+
 
 export const prisma =
   globalForPrisma.prisma ??
